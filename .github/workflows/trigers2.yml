@@ -1,0 +1,37 @@
+name: Manual Trigger with Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch to run the workflow on
+        required: true
+        default: main
+        type: string
+      environment:
+        description: Deployment environment
+        required: true
+        default: staging
+        type: choice
+        options:
+          - staging
+          - production
+      version:
+        description: Version to deploy
+        required: false
+        default: latest
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo inputs
+        run: |
+          echo "Branch: ${{ github.event.inputs.branch }}"
+          echo "Environment: ${{ github.event.inputs.environment }}"
+          echo "Version: ${{ github.event.inputs.version }}"
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
