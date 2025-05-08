@@ -1,5 +1,5 @@
 name: Manual Trigger with Input
-'on':
+on:
   workflow_dispatch:
     inputs:
       environment:
@@ -15,6 +15,7 @@ name: Manual Trigger with Input
         required: false
         default: latest
         type: string
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
